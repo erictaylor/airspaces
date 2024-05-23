@@ -15,7 +15,7 @@ This project is setup to create custom OpenAIR airspace files that can be upload
 
 ## Airspace Files
 
-- [SGU - St. George, UT 🔗](https://github.com/erictaylor/airspaces/blob/main/airspaces/sgu-airspaces.txt)
+- [SGU - St. George, UT 🔗](https://raw.githubusercontent.com/erictaylor/airspaces/main/airspaces/sgu-airspaces.txt)
 
   This file contains the class E2 and E4 transition areas airspaces for SGU airport in St. George, UT, as established in [FR Doc. 2017-16282](https://www.federalregister.gov/documents/2017/08/03/2017-16282/establishment-of-class-e-airspace-and-amendment-of-class-e-airspace-st-george-ut#print)
 
