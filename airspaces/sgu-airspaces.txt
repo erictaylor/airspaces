@@ -1,6 +1,6 @@
 ***************************** SGU *****************************
+* Last Update: 2024-05-23T18:20:00Z
 * See: https://www.federalregister.gov/documents/2017/08/03/2017-16282/establishment-of-class-e-airspace-and-amendment-of-class-e-airspace-st-george-ut
-* V X=37:02.22N 113:30.69W is NOT accurate according to above documentation.
 ***************************************************************
 
 ******** E2 ********
