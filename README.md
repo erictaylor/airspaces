@@ -4,7 +4,7 @@
 
 This is a personal project of Eric Taylor's to create custom OpenAIR airspace files to use while flying with [Gaggle](https://flygaggle.com/).
 
-Gaggle uses [OpenAIP](https://www.openaip.net/) airspace files to display airspace on their map. There are lots of missing airspaces in OpenAIP as it relates to the locations I fly in.
+Gaggle uses [OpenAIP](https://www.openaip.net/) airspace database to display airspaces on their map. There are lots of missing airspaces in OpenAIP as it relates to the locations I fly in.
 
 This project is setup to create custom OpenAIR airspace files that can be uploaded to Gaggle to display airspaces that are not in OpenAIP and fill in the gaps.
 
