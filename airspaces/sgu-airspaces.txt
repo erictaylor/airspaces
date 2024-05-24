@@ -1,5 +1,5 @@
 ***************************** SGU *****************************
-* Last Update: 2024-05-24T01:10:00Z
+* Last Update: 2024-05-24T16:30:00Z
 * See: https://www.federalregister.gov/documents/2017/08/03/2017-16282/establishment-of-class-e-airspace-and-amendment-of-class-e-airspace-st-george-ut
 ***************************************************************
 
@@ -34,7 +34,7 @@ V X=37:02:11 N 113:30:37 W
 DA 4.5, 176.585560, -130.642976
 * DB 036:57:42.02 N 113:30:16.91 W, 036:59:15.62 N 113:34:52.65 W
 
-* SGU Ultralight Vehicles Do Not Fly Zone
+* SGU Ultralight Vehicles Do Not Fly Zone Primary
 *
 * St. George Regional Airport, UT
 * Lat. 37°02′11″ N., long. 113°30′37″ W.
@@ -42,14 +42,53 @@ DA 4.5, 176.585560, -130.642976
 * Airspace extending upward from the surface within 0.75 miles each
 * side of the St. George Regional Airport 024° bearing from the airport
 * 3.25 miles northeast of the airport, and within 0.75 miles each side
-* of the airport 204° bearing from the airport 2.5 miles southwest
-* of the airport.
+* of the airport 204° bearing from the airport 2.5 miles southwest of
+* the airport.
+*
+* This zone will be known as the "primary" do not fly zone.
 *
 AC R
-AN SGU ULTRALIGHT VEHICLES DO NOT FLY ZONE
+AN SGU ULTRALIGHT VEHICLES DO NOT FLY ZONE PRIMARY
 AH 17999 ft
 AL SFC
 DP 037:05:27.07 N 113:29:49.19 W
 DP 037:04:50.53 N 113:28:6.31 W
 DP 036:59:35.93 N 113:31:1.87 W
 DP 037:00:12.47 N 113:32:44.64 W
+
+* SGU Ultralight Vehicles Do Not Fly Zone East Ext
+*
+* Airspace extending to the east of the primary zone (described
+* above) to include covering the area west of SR-7 (ie Southern Pkwy)
+* back to the primary zone.
+*
+AC R
+AN SGU ULTRALIGHT VEHICLES DO NOT FLY ZONE EAST EXT
+AH 17999 ft
+AL SFC
+DP 037:02:59.85 N 113:29:8.08 W
+DP 037:01:23.8 N 113:29:07.5 W
+DP 037:00:37.4 N 113:29:59.5 W
+DP 037:00:34.42 N 113:30:29.23 W
+
+
+* SGU Ultralight Vehicles Do Not Fly Zone West Ext
+*
+* Airspace extending to the west of the primary zone (described
+* above) to include covering parts of the "White Dome Nature Preserve"
+* area towards but not including River Rd, and north to but not including
+* the area occupied by the Family Dollar Distribution Center and
+* UPS Customer Center before cutting back to the west mid point of
+* the primary zone (roughly 037°02′29.26″ N. 113°31′28.41″ W.).
+*
+* The areas ends south of the Family Dollar Distribution Center
+*
+AC R
+AN SGU ULTRALIGHT VEHICLES DO NOT FLY ZONE WEST EXT
+AH 17999 ft
+AL SFC
+DP 037:02:29.26 N 113:31:28.41 W
+DP 037:00:12.47 N 113:32:44.64 W
+DP 037:00:57.00 N 113:33:27.0 W
+DP 037:01:36.5 N 113:32:57.0 W
+DP 037:02:29.26 N 113:31:28.41 W

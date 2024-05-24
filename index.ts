@@ -92,6 +92,51 @@ const getLatLonPoint = (
 };
 
 /**
+ * Find the Coordinates of a point between two Coordinate points.
+ */
+const getMidpoint = (pointA: Coordinate, pointB: Coordinate): Coordinate => {
+  const [lat1, lon1] = pointA;
+  const [lat2, lon2] = pointB;
+
+  const dLat = degreesToRadians(lat2 - lat1);
+  const dLon = degreesToRadians(lon2 - lon1);
+
+  const lat1Rad = degreesToRadians(lat1);
+  const lat2Rad = degreesToRadians(lat2);
+
+  const Bx = Math.cos(lat2Rad) * Math.cos(dLon);
+  const By = Math.cos(lat2Rad) * Math.sin(dLon);
+
+  const lat3 = radiansToDegrees(
+    Math.atan2(Math.sin(lat1Rad) + Math.sin(lat2Rad), Math.sqrt((Math.cos(lat1Rad) + Bx) ** 2 + By ** 2)),
+  );
+
+  const lon3 = radiansToDegrees(degreesToRadians(lon1) + Math.atan2(By, Math.cos(lat1Rad) + Bx));
+
+  return [lat3, lon3];
+};
+
+/**
+ * Given a pair of Coordinate points, return the Coordinate point
+ * that intersects the line at a given latitude.
+ */
+const getIntersectionPoint = (pointA: Coordinate, pointB: Coordinate, latitude: number): Coordinate | null => {
+  const [lat1, lon1] = pointA;
+  const [lat2, lon2] = pointB;
+
+  const m = (lat2 - lat1) / (lon2 - lon1);
+  const b = lat1 - m * lon1;
+
+  const x = (latitude - b) / m;
+
+  if (x < Math.min(lon1, lon2) || x > Math.max(lon1, lon2)) {
+    return null;
+  }
+
+  return [latitude, x];
+};
+
+/**
  * Find length of a side of a right triangle given the other two sides.
  */
 const pythagoreanTheorem = (a: number, b: number): number => Math.sqrt(a ** 2 + b ** 2);
@@ -232,13 +277,15 @@ const main = (bearing: number, distance: number, side: number) => {
 
 const airportPoint: Coordinate = [37.036389, -113.510278]; // 37°02'11.0"N 113°30'37.0"W
 
-const northDeg = 24;
+const northDeg = 22;
 const southDeg = northDeg + 180;
+const side = 0.75;
 
 const pointN = getLatLonPoint(airportPoint, northDeg, nauticalMilesToKilometers(3.25));
 const pointS = getLatLonPoint(airportPoint, southDeg, nauticalMilesToKilometers(2.5));
 
-const side = 0.75;
+const pointE = getLatLonPoint(airportPoint, addDegreesToBearing(northDeg, 90), nauticalMilesToKilometers(side));
+const pointW = getLatLonPoint(airportPoint, subtractDegreesFromBearing(northDeg, 90), nauticalMilesToKilometers(side));
 
 const pointA = getLatLonPoint(pointN, subtractDegreesFromBearing(northDeg, 90), nauticalMilesToKilometers(side));
 const pointB = getLatLonPoint(pointN, addDegreesToBearing(northDeg, 90), nauticalMilesToKilometers(side));
@@ -249,3 +296,26 @@ console.log(['DP', decimalDegreesToDMS(pointA[0], 'latitude'), decimalDegreesToD
 console.log(['DP', decimalDegreesToDMS(pointB[0], 'latitude'), decimalDegreesToDMS(pointB[1], 'longitude')].join(' '));
 console.log(['DP', decimalDegreesToDMS(pointC[0], 'latitude'), decimalDegreesToDMS(pointC[1], 'longitude')].join(' '));
 console.log(['DP', decimalDegreesToDMS(pointD[0], 'latitude'), decimalDegreesToDMS(pointD[1], 'longitude')].join(' '));
+
+console.log(
+  'Point E',
+  [decimalDegreesToDMS(pointE[0], 'latitude'), decimalDegreesToDMS(pointE[1], 'longitude')].join(' '),
+);
+console.log(
+  'Point W',
+  [decimalDegreesToDMS(pointW[0], 'latitude'), decimalDegreesToDMS(pointW[1], 'longitude')].join(' '),
+);
+
+const pointWD = getMidpoint(pointW, pointD);
+
+console.log(
+  'Point WD:',
+  [decimalDegreesToDMS(pointWD[0], 'latitude'), decimalDegreesToDMS(pointWD[1], 'longitude')].join(' '),
+);
+
+const midAnglePoint = getMidpoint([37.015, -113.559722], pointW);
+
+console.log(
+  'Midpoint:',
+  [decimalDegreesToDMS(midAnglePoint[0], 'latitude'), decimalDegreesToDMS(midAnglePoint[1], 'longitude')].join(' '),
+);
