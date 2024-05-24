@@ -1,14 +1,13 @@
 ***************************** SGU *****************************
-* Last Update: 2024-05-23T18:20:00Z
+* Last Update: 2024-05-24T01:10:00Z
 * See: https://www.federalregister.gov/documents/2017/08/03/2017-16282/establishment-of-class-e-airspace-and-amendment-of-class-e-airspace-st-george-ut
 ***************************************************************
 
-******** E2 ********
-
+* St. George Regional Airport Class E2 Airspace
 AC E
 AN SAINT GEORGE CLASS E2
-AL SFC
 AH 17999 ft
+AL SFC
 V X=37:02:11 N 113:30:37 W
 DC 4.5
 *
@@ -16,8 +15,8 @@ DC 4.5
 * St. George Regional Airport Class E4 Airspace - Northeast Segment
 AC E
 AN SAINT GEORGE E4 NE
-AL SFC
 AH 17999 ft
+AL SFC
 DP 037:08:20.33 N 113:24:42.64 W
 DP 037:09:20.23 N 113:26:52.79 W
 V X=37:02:11 N 113:30:37 W
@@ -27,10 +26,30 @@ DA 4.5, 17.07118, 42.995148
 * St. George Regional Airport Class E4 Airspace - Southwest Segment
 AC E
 AN SAINT GEORGE E4 SW
-AL SFC
 AH 17999 ft
+AL SFC
 DP 036:55:09.09 N 113:37:03.68 W
 DP 036:53:35.48 N 113:32:27.89 W
 V X=37:02:11 N 113:30:37 W
 DA 4.5, 176.585560, -130.642976
 * DB 036:57:42.02 N 113:30:16.91 W, 036:59:15.62 N 113:34:52.65 W
+
+* SGU Ultralight Vehicles Do Not Fly Zone
+*
+* St. George Regional Airport, UT
+* Lat. 37°02′11″ N., long. 113°30′37″ W.
+*
+* Airspace extending upward from the surface within 0.75 miles each
+* side of the St. George Regional Airport 024° bearing from the airport
+* 3.25 miles northeast of the airport, and within 0.75 miles each side
+* of the airport 204° bearing from the airport 2.5 miles southwest
+* of the airport.
+*
+AC R
+AN SGU ULTRALIGHT VEHICLES DO NOT FLY ZONE
+AH 17999 ft
+AL SFC
+DP 037:05:27.07 N 113:29:49.19 W
+DP 037:04:50.53 N 113:28:6.31 W
+DP 036:59:35.93 N 113:31:1.87 W
+DP 037:00:12.47 N 113:32:44.64 W

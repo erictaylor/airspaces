@@ -61,6 +61,10 @@ const getBearing = (pointA: Coordinate, pointB: Coordinate): number => {
 
 const getLatLonPoint = (
   [latitude, longitude]: Coordinate,
+  /**
+   * Bearing in degrees.
+   * 0 - 360 degrees. Clockwise from North.
+   */
   bearing: number,
   /**
    * Distance in kilometers
@@ -222,6 +226,26 @@ const main = (bearing: number, distance: number, side: number) => {
 };
 
 // NE Extension
-main(30, 7.7, 1);
+// main(30, 7.7, 1);
 // SW Extension
 // main(203, 8.5, 2);
+
+const airportPoint: Coordinate = [37.036389, -113.510278]; // 37°02'11.0"N 113°30'37.0"W
+
+const northDeg = 24;
+const southDeg = northDeg + 180;
+
+const pointN = getLatLonPoint(airportPoint, northDeg, nauticalMilesToKilometers(3.25));
+const pointS = getLatLonPoint(airportPoint, southDeg, nauticalMilesToKilometers(2.5));
+
+const side = 0.75;
+
+const pointA = getLatLonPoint(pointN, subtractDegreesFromBearing(northDeg, 90), nauticalMilesToKilometers(side));
+const pointB = getLatLonPoint(pointN, addDegreesToBearing(northDeg, 90), nauticalMilesToKilometers(side));
+const pointC = getLatLonPoint(pointS, subtractDegreesFromBearing(southDeg, 90), nauticalMilesToKilometers(side));
+const pointD = getLatLonPoint(pointS, addDegreesToBearing(southDeg, 90), nauticalMilesToKilometers(side));
+
+console.log(['DP', decimalDegreesToDMS(pointA[0], 'latitude'), decimalDegreesToDMS(pointA[1], 'longitude')].join(' '));
+console.log(['DP', decimalDegreesToDMS(pointB[0], 'latitude'), decimalDegreesToDMS(pointB[1], 'longitude')].join(' '));
+console.log(['DP', decimalDegreesToDMS(pointC[0], 'latitude'), decimalDegreesToDMS(pointC[1], 'longitude')].join(' '));
+console.log(['DP', decimalDegreesToDMS(pointD[0], 'latitude'), decimalDegreesToDMS(pointD[1], 'longitude')].join(' '));
