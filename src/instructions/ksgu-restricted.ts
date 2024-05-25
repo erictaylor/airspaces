@@ -2,7 +2,9 @@ import { SGU_AIRPORT_COORDINATES } from '../constants';
 import {
   addDegreesToBearing,
   coordinateToOpenAir,
+  getBearing,
   getLatLonPoint,
+  getMidpoint,
   nauticalMilesToKilometers,
   subtractDegreesFromBearing,
 } from '../utils';
@@ -27,16 +29,8 @@ const getPrimaryInstructions = (bearing: number, side: number): readonly string[
 
   const pointA = getLatLonPoint(pointN, subtractDegreesFromBearing(bearing, 90), nauticalMilesToKilometers(side));
   const pointB = getLatLonPoint(pointN, addDegreesToBearing(bearing, 90), nauticalMilesToKilometers(side));
-  const pointC = getLatLonPoint(
-    pointS,
-    subtractDegreesFromBearing(addDegreesToBearing(bearing, 180), 90),
-    nauticalMilesToKilometers(side),
-  );
-  const pointD = getLatLonPoint(
-    pointS,
-    addDegreesToBearing(addDegreesToBearing(bearing, 180), 90),
-    nauticalMilesToKilometers(side),
-  );
+  const pointC = getLatLonPoint(pointS, subtractDegreesFromBearing(bearing, 180 + 90), nauticalMilesToKilometers(side));
+  const pointD = getLatLonPoint(pointS, addDegreesToBearing(bearing, 180 + 90), nauticalMilesToKilometers(side));
 
   return [
     ...getSharedInstructions('KSGU Ultralight Vehicles Restricted Primary'),
@@ -58,18 +52,48 @@ const getEastExtensionInstructions = (): readonly string[] => {
 };
 
 const getWestExtensionInstructions = (bearing: number, side: number): readonly string[] => {
+  const pointS = getLatLonPoint(
+    SGU_AIRPORT_COORDINATES,
+    addDegreesToBearing(bearing, 180),
+    nauticalMilesToKilometers(SOUTH_DISTANCE),
+  );
   const pointW = getLatLonPoint(
     SGU_AIRPORT_COORDINATES,
     subtractDegreesFromBearing(bearing, 90),
     nauticalMilesToKilometers(side),
   );
 
+  const southWestBearing = addDegreesToBearing(bearing, 180);
+
+  const pointD = getLatLonPoint(pointS, addDegreesToBearing(southWestBearing, 90), nauticalMilesToKilometers(side));
+
+  const pointR1 = getLatLonPoint(
+    pointW,
+    addDegreesToBearing(southWestBearing, 15),
+    nauticalMilesToKilometers(SOUTH_DISTANCE),
+  );
+
+  const pointR2 = getLatLonPoint(
+    pointW,
+    addDegreesToBearing(southWestBearing, 28),
+    nauticalMilesToKilometers(SOUTH_DISTANCE - 0.375),
+  );
+
   return [
     ...getSharedInstructions('KSGU Ultralight Vehicles Restricted West Ext'),
     `DP ${coordinateToOpenAir(pointW)}`,
-    'DP 037:00:12.47 N 113:32:44.64 W',
-    'DP 037:00:57.00 N 113:33:27.00 W',
-    'DP 037:01:36.50 N 113:32:57.00 W',
+    `DP ${coordinateToOpenAir(pointD)}`,
+    `V X=${coordinateToOpenAir(pointW)}`,
+    `DB ${coordinateToOpenAir(pointD)}, ${coordinateToOpenAir(pointR1)}`,
+    // Calculated middle center point for R1 and R2
+    `V X=${coordinateToOpenAir(
+      getLatLonPoint(
+        getMidpoint(pointR1, pointR2),
+        addDegreesToBearing(getBearing(pointR1, pointR2), 90),
+        nauticalMilesToKilometers(0.375),
+      ),
+    )}`,
+    `DB ${coordinateToOpenAir(pointR1)}, ${coordinateToOpenAir(pointR2)}`,
     `DP ${coordinateToOpenAir(pointW)}`,
   ];
 };
@@ -111,8 +135,6 @@ export const main = () => {
    * the area occupied by the Family Dollar Distribution Center and
    * UPS Customer Center before cutting back to the west mid point of
    * the primary zone (roughly 037°02′29.26″ N. 113°31′28.41″ W.).
-   *
-   * The areas ends south of the Family Dollar Distribution Center
    */
   console.log('* West Ext');
   console.log(getWestExtensionInstructions(BEARING, SIDE).join('\n'));

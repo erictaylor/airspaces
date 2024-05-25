@@ -90,7 +90,6 @@ export const getMidpoint = (pointA: Coordinate, pointB: Coordinate): Coordinate 
   const [lat1, lon1] = pointA;
   const [lat2, lon2] = pointB;
 
-  const dLat = degreesToRadians(lat2 - lat1);
   const dLon = degreesToRadians(lon2 - lon1);
 
   const lat1Rad = degreesToRadians(lat1);
@@ -106,6 +105,18 @@ export const getMidpoint = (pointA: Coordinate, pointB: Coordinate): Coordinate 
   const lon3 = radiansToDegrees(degreesToRadians(lon1) + Math.atan2(By, Math.cos(lat1Rad) + Bx));
 
   return [lat3, lon3];
+};
+
+/**
+ * Find the distance between two Coordinate points in nautical miles.
+ *
+ * @param pointA - The first Coordinate point.
+ * @param pointB - The second Coordinate point.
+ *
+ * @returns The distance between the two Coordinate points in nautical miles.
+ */
+export const getDistanceBetweenPoints = (pointA: Coordinate, pointB: Coordinate): number => {
+  throw new Error('Not implemented');
 };
 
 /**

@@ -1,5 +1,5 @@
 ***************************** SGU *****************************
-* Last Update: 2024-05-25T04:30:00Z
+* Last Update: 2024-05-25T15:30:00Z
 *
 * Usage of this file is NOT a to be considered a "prior authorization"
 * to be in the KSGU airspace under FAR 103.17. This file is to be used
@@ -34,9 +34,9 @@ AC R
 AN KSGU ULTRALIGHT VEHICLES RESTRICTED PRIMARY
 AH 17999 ft
 AL SFC
-DP 037:05:27.07 N 113:29:49.19 W
-DP 037:04:50.53 N 113:28:6.31 W
-DP 036:59:35.93 N 113:31:1.87 W
+DP 037:05:27.08 N 113:29:49.20 W
+DP 037:04:50.54 N 113:28:06.32 W
+DP 036:59:35.93 N 113:31:01.88 W
 DP 037:00:12.47 N 113:32:44.64 W
 
 * KSGU Ultralight Vehicles Do Not Fly Zone East Ext
@@ -49,9 +49,9 @@ AC R
 AN KSGU ULTRALIGHT VEHICLES RESTRICTED EAST EXT
 AH 17999 ft
 AL SFC
-DP 037:02:59.85 N 113:29:8.08 W
-DP 037:01:23.8 N 113:29:07.5 W
-DP 037:00:37.4 N 113:29:59.5 W
+DP 037:02:59.85 N 113:29:08.08 W
+DP 037:01:23.80 N 113:29:07.50 W
+DP 037:00:37.40 N 113:29:59.50 W
 DP 037:00:34.42 N 113:30:29.23 W
 
 * KSGU Ultralight Vehicles Do Not Fly Zone West Ext
@@ -63,14 +63,14 @@ DP 037:00:34.42 N 113:30:29.23 W
 * UPS Customer Center before cutting back to the west mid point of
 * the primary zone (roughly 037°02′29.26″ N. 113°31′28.41″ W.).
 *
-* The areas ends south of the Family Dollar Distribution Center
-*
 AC R
 AN KSGU ULTRALIGHT VEHICLES RESTRICTED WEST EXT
 AH 17999 ft
 AL SFC
-DP 037:02:29.26 N 113:31:28.41 W
+DP 037:02:29.27 N 113:31:28.41 W
 DP 037:00:12.47 N 113:32:44.64 W
-DP 037:00:57.00 N 113:33:27.0 W
-DP 037:01:36.5 N 113:32:57.0 W
-DP 037:02:29.26 N 113:31:28.41 W
+V X=037:02:29.27 N 113:31:28.41 W
+DB 037:00:12.47 N 113:32:44.64 W, 037:00:32.89 N 113:33:26.41 W
+V X=037:00:55.44 N 113:33:02.44 W
+DB 037:00:32.89 N 113:33:26.41 W, 037:01:10.89 N 113:33:34.02 W
+DP 037:02:29.27 N 113:31:28.41 W
