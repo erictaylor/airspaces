@@ -15,9 +15,17 @@ This project is setup to create custom OpenAIR airspace files that can be upload
 
 ## Airspace Files
 
-- [SGU - St. George, UT 🔗](https://raw.githubusercontent.com/erictaylor/airspaces/main/airspaces/sgu-airspaces.txt)
+- [KSGU - St. George, UT 🔗](https://raw.githubusercontent.com/erictaylor/airspaces/main/airspaces/ksgu-airspaces.txt)
 
-  This file contains the class E2 and E4 transition areas airspaces for SGU airport in St. George, UT, as established in [FR Doc. 2017-16282](https://www.federalregister.gov/documents/2017/08/03/2017-16282/establishment-of-class-e-airspace-and-amendment-of-class-e-airspace-st-george-ut#print)
+  This file contains the class E2 and E4 transition areas airspaces for KSGU airport in St. George, UT (ie St. George Regional Airport), as established in [FR Doc. 2017-16282](https://www.federalregister.gov/documents/2017/08/03/2017-16282/establishment-of-class-e-airspace-and-amendment-of-class-e-airspace-st-george-ut).
+  
+- [KSGU - St. George, UT - Ultralight Restrictions 🔗](https://raw.githubusercontent.com/erictaylor/airspaces/main/airspaces/ksgu-ultralight-restricted-airspaces.txt)
+
+  This file contains airspace at the St. George Regional Airport (KSGU) that should be considered restricted (ie no fly zone) to ultralight vehicles ([FAR Part 103](https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-103)). These restrictions were drafted in conjunction with the KSGU airport manager to satisfy [FAR 103.17](https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-103/subpart-B/section-103.17) for authorized pilots.
+  * Pilots should stay out of the spaces marked restricted per this file.
+  * Pilots should stay below 500' AGL inside the official E2 and E4 transition airspaces.
+  
+  Any questions or concerns should be directed to the KSGU airport manager.
 
 ## Additional Resources
 
