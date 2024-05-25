@@ -1,5 +1,5 @@
 ***************************** SGU *****************************
-* Last Update: 2024-05-25T15:30:00Z
+* Last Update: 2024-05-25T17:30:00Z
 *
 * Usage of this file is NOT a to be considered a "prior authorization"
 * to be in the KSGU airspace under FAR 103.17. This file is to be used
@@ -49,7 +49,7 @@ AC R
 AN KSGU ULTRALIGHT VEHICLES RESTRICTED EAST EXT
 AH 17999 ft
 AL SFC
-DP 037:02:59.85 N 113:29:08.08 W
+DP 037:03:03.49 N 113:29:06.05 W
 DP 037:01:23.80 N 113:29:07.50 W
 DP 037:00:37.40 N 113:29:59.50 W
 DP 037:00:34.42 N 113:30:29.23 W

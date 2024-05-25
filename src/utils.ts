@@ -142,11 +142,41 @@ export const getIntersectionPointAtLatitude = (
 
   const x = (latitude - b) / m;
 
-  if (x < Math.min(lon1, lon2) || x > Math.max(lon1, lon2)) {
+  if (x < Math.min(lon1, lon2) || x > Math.max(lon1, lon2) || Number.isNaN(x)) {
     return null;
   }
 
   return [latitude, x];
+};
+
+/**
+ * Given a pair of Coordinate points, return the Coordinate point
+ * that intersects the line at a given longitude.
+ *
+ * @param pointA - The first Coordinate point.
+ * @param pointB - The second Coordinate point.
+ * @param longitude - The longitude at which to find the intersection point.
+ *
+ * @returns The Coordinate point that intersects the line at the given longitude.
+ */
+export const getIntersectionPointAtLongitude = (
+  pointA: Coordinate,
+  pointB: Coordinate,
+  longitude: number,
+): Coordinate | null => {
+  const [lat1, lon1] = pointA;
+  const [lat2, lon2] = pointB;
+
+  const m = (lat2 - lat1) / (lon2 - lon1);
+  const b = lat1 - m * lon1;
+
+  const y = m * longitude + b;
+
+  if (y < Math.min(lat1, lat2) || y > Math.max(lat1, lat2) || Number.isNaN(y)) {
+    return null;
+  }
+
+  return [y, longitude];
 };
 
 /**

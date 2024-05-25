@@ -3,6 +3,7 @@ import {
   addDegreesToBearing,
   coordinateToOpenAir,
   getBearing,
+  getIntersectionPointAtLongitude,
   getLatLonPoint,
   getMidpoint,
   nauticalMilesToKilometers,
@@ -41,10 +42,27 @@ const getPrimaryInstructions = (bearing: number, side: number): readonly string[
   ];
 };
 
-const getEastExtensionInstructions = (): readonly string[] => {
+const getEastExtensionInstructions = (bearing: number, side: number): readonly string[] => {
+  const pointN = getLatLonPoint(SGU_AIRPORT_COORDINATES, bearing, nauticalMilesToKilometers(NORTH_DISTANCE));
+  const pointS = getLatLonPoint(
+    SGU_AIRPORT_COORDINATES,
+    addDegreesToBearing(bearing, 180),
+    nauticalMilesToKilometers(SOUTH_DISTANCE),
+  );
+
+  const pointB = getLatLonPoint(pointN, addDegreesToBearing(bearing, 90), nauticalMilesToKilometers(side));
+  const pointC = getLatLonPoint(pointS, subtractDegreesFromBearing(bearing, 180 + 90), nauticalMilesToKilometers(side));
+
+  const northPoint = getIntersectionPointAtLongitude(pointB, pointC, -113.485015);
+
+  if (!northPoint) {
+    throw new Error('Something went wrong while calculating the intersection point for the east extension.');
+  }
+
   return [
     ...getSharedInstructions('KSGU Ultralight Vehicles Restricted East Ext'),
-    'DP 037:02:59.85 N 113:29:08.08 W',
+    // 'DP 037:02:59.85 N 113:29:08.08 W',
+    `DP ${coordinateToOpenAir(northPoint)}`,
     'DP 037:01:23.80 N 113:29:07.50 W',
     'DP 037:00:37.40 N 113:29:59.50 W',
     'DP 037:00:34.42 N 113:30:29.23 W',
@@ -124,7 +142,7 @@ export const main = () => {
    * back to the primary zone.
    */
   console.log('* East Ext');
-  console.log(getEastExtensionInstructions().join('\n'));
+  console.log(getEastExtensionInstructions(BEARING, SIDE).join('\n'));
   console.log('\n');
   /**
    * KSGU Ultralight Vehicles Do Not Fly Zone West Ext
