@@ -1,5 +1,7 @@
 # ✈️ Airspaces
 
+![Tests](https://github.com/erictaylor/airspaces/actions/workflows/ci.yml/badge.svg)
+
 ## Introduction
 
 This is a personal project of Eric Taylor's to create custom OpenAIR airspace files to use while flying with [Gaggle](https://flygaggle.com/).
