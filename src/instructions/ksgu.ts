@@ -13,15 +13,15 @@ import {
 
 type ExtensionArgs = [bearing: number, distance: number, side: number];
 
-const RADIUS = 4.5;
-const NE_EXTENSION: ExtensionArgs = [30, 7.7, 1];
-const SW_EXTENSION: ExtensionArgs = [203, 8.5, 2];
+export const RADIUS = 4.5;
+export const NE_EXTENSION: ExtensionArgs = [30, 7.7, 1];
+export const SW_EXTENSION: ExtensionArgs = [203, 8.5, 2];
 
 const getSharedInstructions = (name: string): readonly string[] => {
   return ['AC E', `AN ${name.toUpperCase()}`, 'AH 17999 ft', 'AL SFC'];
 };
 
-const getInstruction = (radius: number): readonly string[] => {
+export const getInstruction = (radius: number): readonly string[] => {
   return [
     ...getSharedInstructions('Saint George Class E2'),
     `V X=${coordinateToOpenAir(SGU_AIRPORT_COORDINATES)}`,
@@ -29,7 +29,7 @@ const getInstruction = (radius: number): readonly string[] => {
   ];
 };
 
-const getExtensionInstructions = (bearing: number, distance: number, side: number): readonly string[] => {
+export const getExtensionInstructions = (bearing: number, distance: number, side: number): readonly string[] => {
   const pointY = getLatLonPoint(SGU_AIRPORT_COORDINATES, bearing, nauticalMilesToKilometers(distance));
 
   const pointA = getLatLonPoint(pointY, subtractDegreesFromBearing(bearing, 90), nauticalMilesToKilometers(side));

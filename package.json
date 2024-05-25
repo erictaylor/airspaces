@@ -8,6 +8,9 @@
   },
   "type": "module",
   "module": "index.ts",
+  "engines": {
+    "bun": "^1.1.10"
+  },
   "devDependencies": {
     "@biomejs/biome": "^1.7.3",
     "@types/bun": "latest"

@@ -10,8 +10,8 @@ import {
   subtractDegreesFromBearing,
 } from '../utils';
 
-const BEARING = 24;
-const SIDE = 0.75;
+export const BEARING = 24;
+export const SIDE = 0.75;
 
 const NORTH_DISTANCE = 3.25;
 const SOUTH_DISTANCE = 2.5;
@@ -20,7 +20,7 @@ const getSharedInstructions = (name: string): readonly string[] => {
   return ['AC R', `AN ${name.toUpperCase()}`, 'AH 17999 ft', 'AL SFC'];
 };
 
-const getPrimaryInstructions = (bearing: number, side: number): readonly string[] => {
+export const getPrimaryInstructions = (bearing: number, side: number): readonly string[] => {
   const pointN = getLatLonPoint(SGU_AIRPORT_COORDINATES, bearing, nauticalMilesToKilometers(NORTH_DISTANCE));
   const pointS = getLatLonPoint(
     SGU_AIRPORT_COORDINATES,
@@ -42,7 +42,7 @@ const getPrimaryInstructions = (bearing: number, side: number): readonly string[
   ];
 };
 
-const getEastExtensionInstructions = (bearing: number, side: number): readonly string[] => {
+export const getEastExtensionInstructions = (bearing: number, side: number): readonly string[] => {
   const pointN = getLatLonPoint(SGU_AIRPORT_COORDINATES, bearing, nauticalMilesToKilometers(NORTH_DISTANCE));
   const pointS = getLatLonPoint(
     SGU_AIRPORT_COORDINATES,
@@ -69,7 +69,7 @@ const getEastExtensionInstructions = (bearing: number, side: number): readonly s
   ];
 };
 
-const getWestExtensionInstructions = (bearing: number, side: number): readonly string[] => {
+export const getWestExtensionInstructions = (bearing: number, side: number): readonly string[] => {
   const pointS = getLatLonPoint(
     SGU_AIRPORT_COORDINATES,
     addDegreesToBearing(bearing, 180),
