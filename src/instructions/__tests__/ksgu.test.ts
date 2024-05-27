@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'bun:test';
-import { NE_EXTENSION, RADIUS, SW_EXTENSION, getExtensionInstructions, getInstruction } from '../ksgu';
+import {
+  NE_EXTENSION,
+  RADIUS,
+  SW_EXTENSION,
+  getExtensionInstructions,
+  getInstruction,
+} from '../ksgu';
 
 describe('KSGU Instructions', () => {
   it('should return the expected primary instructions', () => {

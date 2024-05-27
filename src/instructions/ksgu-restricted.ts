@@ -1,7 +1,7 @@
+import { buildAirspace } from '../build-airspace';
 import { SGU_AIRPORT_COORDINATES } from '../constants';
 import {
   addDegreesToBearing,
-  coordinateToOpenAir,
   getBearing,
   getIntersectionPointAtLongitude,
   getLatLonPoint,
@@ -16,60 +16,119 @@ export const SIDE = 0.75;
 const NORTH_DISTANCE = 3.25;
 const SOUTH_DISTANCE = 2.5;
 
-const getSharedInstructions = (name: string): readonly string[] => {
-  return ['AC R', `AN ${name.toUpperCase()}`, 'AH 17999 ft', 'AL SFC'];
-};
+const CEILING = 17999;
+const FLOOR = 'SFC';
 
-export const getPrimaryInstructions = (bearing: number, side: number): readonly string[] => {
-  const pointN = getLatLonPoint(SGU_AIRPORT_COORDINATES, bearing, nauticalMilesToKilometers(NORTH_DISTANCE));
+export const getPrimaryInstructions = (
+  bearing: number,
+  side: number,
+): readonly string[] => {
+  const pointN = getLatLonPoint(
+    SGU_AIRPORT_COORDINATES,
+    bearing,
+    nauticalMilesToKilometers(NORTH_DISTANCE),
+  );
   const pointS = getLatLonPoint(
     SGU_AIRPORT_COORDINATES,
     addDegreesToBearing(bearing, 180),
     nauticalMilesToKilometers(SOUTH_DISTANCE),
   );
 
-  const pointA = getLatLonPoint(pointN, subtractDegreesFromBearing(bearing, 90), nauticalMilesToKilometers(side));
-  const pointB = getLatLonPoint(pointN, addDegreesToBearing(bearing, 90), nauticalMilesToKilometers(side));
-  const pointC = getLatLonPoint(pointS, subtractDegreesFromBearing(bearing, 180 + 90), nauticalMilesToKilometers(side));
-  const pointD = getLatLonPoint(pointS, addDegreesToBearing(bearing, 180 + 90), nauticalMilesToKilometers(side));
+  const pointA = getLatLonPoint(
+    pointN,
+    subtractDegreesFromBearing(bearing, 90),
+    nauticalMilesToKilometers(side),
+  );
+  const pointB = getLatLonPoint(
+    pointN,
+    addDegreesToBearing(bearing, 90),
+    nauticalMilesToKilometers(side),
+  );
+  const pointC = getLatLonPoint(
+    pointS,
+    subtractDegreesFromBearing(bearing, 180 + 90),
+    nauticalMilesToKilometers(side),
+  );
+  const pointD = getLatLonPoint(
+    pointS,
+    addDegreesToBearing(bearing, 180 + 90),
+    nauticalMilesToKilometers(side),
+  );
 
-  return [
-    ...getSharedInstructions('KSGU Ultralight Vehicles Restricted Primary'),
-    `DP ${coordinateToOpenAir(pointA)}`,
-    `DP ${coordinateToOpenAir(pointB)}`,
-    `DP ${coordinateToOpenAir(pointC)}`,
-    `DP ${coordinateToOpenAir(pointD)}`,
-  ];
+  return buildAirspace(
+    {
+      airspaceClass: 'R',
+      name: 'KSGU Ultralight Vehicles Restricted Primary',
+      ceiling: CEILING,
+      floor: FLOOR,
+    },
+    [
+      ['DP', pointA],
+      ['DP', pointB],
+      ['DP', pointC],
+      ['DP', pointD],
+    ],
+  );
 };
 
-export const getEastExtensionInstructions = (bearing: number, side: number): readonly string[] => {
-  const pointN = getLatLonPoint(SGU_AIRPORT_COORDINATES, bearing, nauticalMilesToKilometers(NORTH_DISTANCE));
+export const getEastExtensionInstructions = (
+  bearing: number,
+  side: number,
+): readonly string[] => {
+  const pointN = getLatLonPoint(
+    SGU_AIRPORT_COORDINATES,
+    bearing,
+    nauticalMilesToKilometers(NORTH_DISTANCE),
+  );
   const pointS = getLatLonPoint(
     SGU_AIRPORT_COORDINATES,
     addDegreesToBearing(bearing, 180),
     nauticalMilesToKilometers(SOUTH_DISTANCE),
   );
 
-  const pointB = getLatLonPoint(pointN, addDegreesToBearing(bearing, 90), nauticalMilesToKilometers(side));
-  const pointC = getLatLonPoint(pointS, subtractDegreesFromBearing(bearing, 180 + 90), nauticalMilesToKilometers(side));
+  const pointB = getLatLonPoint(
+    pointN,
+    addDegreesToBearing(bearing, 90),
+    nauticalMilesToKilometers(side),
+  );
+  const pointC = getLatLonPoint(
+    pointS,
+    subtractDegreesFromBearing(bearing, 180 + 90),
+    nauticalMilesToKilometers(side),
+  );
 
-  const northPoint = getIntersectionPointAtLongitude(pointB, pointC, -113.485015);
+  const northPoint = getIntersectionPointAtLongitude(
+    pointB,
+    pointC,
+    -113.485015,
+  );
 
   if (!northPoint) {
-    throw new Error('Something went wrong while calculating the intersection point for the east extension.');
+    throw new Error(
+      'Something went wrong while calculating the intersection point for the east extension.',
+    );
   }
 
-  return [
-    ...getSharedInstructions('KSGU Ultralight Vehicles Restricted East Ext'),
-    // 'DP 037:02:59.85 N 113:29:08.08 W',
-    `DP ${coordinateToOpenAir(northPoint)}`,
-    'DP 037:01:23.80 N 113:29:07.50 W',
-    'DP 037:00:37.40 N 113:29:59.50 W',
-    'DP 037:00:34.42 N 113:30:29.23 W',
-  ];
+  return buildAirspace(
+    {
+      airspaceClass: 'R',
+      name: 'KSGU Ultralight Vehicles Restricted East Ext',
+      ceiling: CEILING,
+      floor: FLOOR,
+    },
+    [
+      ['DP', northPoint],
+      ['DP', [37.023278, -113.485417]],
+      ['DP', [37.010389, -113.499861]],
+      ['DP', [37.009561, -113.508119]],
+    ],
+  );
 };
 
-export const getWestExtensionInstructions = (bearing: number, side: number): readonly string[] => {
+export const getWestExtensionInstructions = (
+  bearing: number,
+  side: number,
+): readonly string[] => {
   const pointS = getLatLonPoint(
     SGU_AIRPORT_COORDINATES,
     addDegreesToBearing(bearing, 180),
@@ -83,7 +142,11 @@ export const getWestExtensionInstructions = (bearing: number, side: number): rea
 
   const southWestBearing = addDegreesToBearing(bearing, 180);
 
-  const pointD = getLatLonPoint(pointS, addDegreesToBearing(southWestBearing, 90), nauticalMilesToKilometers(side));
+  const pointD = getLatLonPoint(
+    pointS,
+    addDegreesToBearing(southWestBearing, 90),
+    nauticalMilesToKilometers(side),
+  );
 
   const pointR1 = getLatLonPoint(
     pointW,
@@ -97,23 +160,33 @@ export const getWestExtensionInstructions = (bearing: number, side: number): rea
     nauticalMilesToKilometers(SOUTH_DISTANCE - 0.375),
   );
 
-  return [
-    ...getSharedInstructions('KSGU Ultralight Vehicles Restricted West Ext'),
-    `DP ${coordinateToOpenAir(pointW)}`,
-    `DP ${coordinateToOpenAir(pointD)}`,
-    `V X=${coordinateToOpenAir(pointW)}`,
-    `DB ${coordinateToOpenAir(pointD)}, ${coordinateToOpenAir(pointR1)}`,
-    // Calculated middle center point for R1 and R2
-    `V X=${coordinateToOpenAir(
-      getLatLonPoint(
-        getMidpoint(pointR1, pointR2),
-        addDegreesToBearing(getBearing(pointR1, pointR2), 90),
-        nauticalMilesToKilometers(0.375),
-      ),
-    )}`,
-    `DB ${coordinateToOpenAir(pointR1)}, ${coordinateToOpenAir(pointR2)}`,
-    `DP ${coordinateToOpenAir(pointW)}`,
-  ];
+  return buildAirspace(
+    {
+      airspaceClass: 'R',
+      name: 'KSGU Ultralight Vehicles Restricted West Ext',
+      ceiling: CEILING,
+      floor: FLOOR,
+    },
+    [
+      ['DP', pointW],
+      ['DP', pointD],
+      ['V', { variable: 'X', value: pointW }],
+      ['DB', [pointD, pointR1]],
+      [
+        'V',
+        {
+          variable: 'X',
+          value: getLatLonPoint(
+            getMidpoint(pointR1, pointR2),
+            addDegreesToBearing(getBearing(pointR1, pointR2), 90),
+            nauticalMilesToKilometers(0.375),
+          ),
+        },
+      ],
+      ['DB', [pointR1, pointR2]],
+      ['DP', pointW],
+    ],
+  );
 };
 
 export const main = () => {

@@ -1,12 +1,12 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "files": {
+    "ignore": ["**/node_modules/**", "**/__snapshots__/**"],
     "ignoreUnknown": true
   },
   "formatter": {
     "enabled": true,
-    "indentStyle": "space",
-    "lineWidth": 120
+    "indentStyle": "space"
   },
   "javascript": {
     "formatter": {

@@ -1,10 +1,14 @@
 #! /usr/bin/env bun
 
 const main = async () => {
-  const instructionFlagIndex = process.argv.findIndex((arg) => arg === '--instruction' || arg === '-i');
+  const instructionFlagIndex = process.argv.findIndex(
+    (arg) => arg === '--instruction' || arg === '-i',
+  );
 
   if (instructionFlagIndex === -1) {
-    console.error('No instruction flag found. Please specify an instruction module to run.');
+    console.error(
+      'No instruction flag found. Please specify an instruction module to run.',
+    );
     process.exit(1);
   }
 

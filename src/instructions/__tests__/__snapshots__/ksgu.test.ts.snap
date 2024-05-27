@@ -33,6 +33,6 @@ exports[`KSGU Instructions should return the expected southwest extension instru
   "DP 036:55:09.09 N 113:37:03.68 W",
   "DP 036:53:35.49 N 113:32:27.89 W",
   "V X=037:02:11.00 N 113:30:37.00 W",
-  "DA 4.5, 176.585560, -130.642976",
+  "DA 4.5, 176.585560, 229.357024",
 ]
 `;

@@ -1,4 +1,4 @@
-import { EARTH_RADIUS } from './constants';
+import { EARTH_RADIUS, NAUTICAL_MILES_TO_KILOMETERS } from './constants';
 import type { CardinalDirection, Coordinate } from './types';
 
 /**
@@ -31,9 +31,11 @@ export const getBearing = (pointA: Coordinate, pointB: Coordinate): number => {
   const y = Math.sin(dLon) * Math.cos(degreesToRadians(lat2));
   const x =
     Math.cos(degreesToRadians(lat1)) * Math.sin(degreesToRadians(lat2)) -
-    Math.sin(degreesToRadians(lat1)) * Math.cos(degreesToRadians(lat2)) * Math.cos(dLon);
+    Math.sin(degreesToRadians(lat1)) *
+      Math.cos(degreesToRadians(lat2)) *
+      Math.cos(dLon);
 
-  return radiansToDegrees(Math.atan2(y, x));
+  return (radiansToDegrees(Math.atan2(y, x)) + 360) % 360;
 };
 
 /**
@@ -65,14 +67,19 @@ export const getLatLonPoint = (
 
   const final_latitude = Math.asin(
     Math.sin(initial_latitude) * Math.cos(distance / EARTH_RADIUS) +
-      Math.cos(initial_latitude) * Math.sin(distance / EARTH_RADIUS) * Math.cos(bearing_rad),
+      Math.cos(initial_latitude) *
+        Math.sin(distance / EARTH_RADIUS) *
+        Math.cos(bearing_rad),
   );
 
   const final_longitude =
     initial_longitude +
     Math.atan2(
-      Math.sin(bearing_rad) * Math.sin(distance / EARTH_RADIUS) * Math.cos(final_latitude),
-      Math.cos(distance / EARTH_RADIUS) - Math.sin(final_latitude) * Math.sin(final_latitude),
+      Math.sin(bearing_rad) *
+        Math.sin(distance / EARTH_RADIUS) *
+        Math.cos(final_latitude),
+      Math.cos(distance / EARTH_RADIUS) -
+        Math.sin(final_latitude) * Math.sin(final_latitude),
     );
 
   return [radiansToDegrees(final_latitude), radiansToDegrees(final_longitude)];
@@ -86,7 +93,10 @@ export const getLatLonPoint = (
  *
  * @returns The Coordinate point that is the midpoint between pointA and pointB.
  */
-export const getMidpoint = (pointA: Coordinate, pointB: Coordinate): Coordinate => {
+export const getMidpoint = (
+  pointA: Coordinate,
+  pointB: Coordinate,
+): Coordinate => {
   const [lat1, lon1] = pointA;
   const [lat2, lon2] = pointB;
 
@@ -99,10 +109,15 @@ export const getMidpoint = (pointA: Coordinate, pointB: Coordinate): Coordinate 
   const By = Math.cos(lat2Rad) * Math.sin(dLon);
 
   const lat3 = radiansToDegrees(
-    Math.atan2(Math.sin(lat1Rad) + Math.sin(lat2Rad), Math.sqrt((Math.cos(lat1Rad) + Bx) ** 2 + By ** 2)),
+    Math.atan2(
+      Math.sin(lat1Rad) + Math.sin(lat2Rad),
+      Math.sqrt((Math.cos(lat1Rad) + Bx) ** 2 + By ** 2),
+    ),
   );
 
-  const lon3 = radiansToDegrees(degreesToRadians(lon1) + Math.atan2(By, Math.cos(lat1Rad) + Bx));
+  const lon3 = radiansToDegrees(
+    degreesToRadians(lon1) + Math.atan2(By, Math.cos(lat1Rad) + Bx),
+  );
 
   return [lat3, lon3];
 };
@@ -115,7 +130,10 @@ export const getMidpoint = (pointA: Coordinate, pointB: Coordinate): Coordinate 
  *
  * @returns The distance between the two Coordinate points in nautical miles.
  */
-export const getDistanceBetweenPoints = (pointA: Coordinate, pointB: Coordinate): number => {
+export const getDistanceBetweenPoints = (
+  pointA: Coordinate,
+  pointB: Coordinate,
+): number => {
   throw new Error('Not implemented');
 };
 
@@ -187,7 +205,8 @@ export const getIntersectionPointAtLongitude = (
  *
  * @returns The length of side c.
  */
-export const pythagoreanTheorem = (a: number, b: number): number => Math.sqrt(a ** 2 + b ** 2);
+export const pythagoreanTheorem = (a: number, b: number): number =>
+  Math.sqrt(a ** 2 + b ** 2);
 
 /**
  * Given the side lengths a, b, and c of a right triangle,
@@ -226,7 +245,9 @@ export const lawOfCosines = (a: number, b: number, angleA: number): number =>
  */
 export const solveForAngleA = (a: number, b: number, c: number): number => {
   if (a >= c || b >= c) {
-    throw new Error('In a right triangle, the hypotenuse must be the longest side.');
+    throw new Error(
+      'In a right triangle, the hypotenuse must be the longest side.',
+    );
   }
 
   const angleARadians = Math.asin(a / c);
@@ -241,22 +262,16 @@ export const solveForAngleA = (a: number, b: number, c: number): number => {
  *
  * @returns The DMS object.
  */
-const calculateDMS = (decimalDegrees: number): { degrees: number; minutes: number; seconds: number } => {
-  // let deg = decimalDegrees < 0 ? -decimalDegrees : decimalDegrees;
-  // const degrees: number = 0 | deg;
-  // deg += 1e-9;
-  // const minutes: number = 0 | ((deg % 1) * 60);
-  // const seconds: number = (0 | (((deg * 60) % 1) * 6_000)) / 100;
+const calculateDMS = (
+  decimalDegrees: number,
+): { degrees: string; minutes: string; seconds: string } => {
+  const absolute = Math.abs(decimalDegrees);
+  const degrees = Math.floor(absolute);
+  const minutesNotTruncated = (absolute - degrees) * 60;
+  const minutes = Math.floor(minutesNotTruncated);
+  const seconds = ((minutesNotTruncated - minutes) * 60).toFixed(2);
 
-  let deg = Math.abs(decimalDegrees);
-  const degrees: number = Math.floor(deg);
-  deg -= degrees;
-  deg *= 60;
-  const minutes: number = Math.floor(deg);
-  deg -= minutes;
-  const seconds: number = Math.round(deg * 60 * 100) / 100;
-
-  return { degrees, minutes, seconds };
+  return { degrees: degrees.toString(), minutes: minutes.toString(), seconds };
 };
 
 /**
@@ -267,7 +282,10 @@ const calculateDMS = (decimalDegrees: number): { degrees: number; minutes: numbe
  *
  * @returns The cardinal direction.
  */
-const getCardinalDirection = (decimalDegrees: number, direction: 'latitude' | 'longitude'): CardinalDirection => {
+export const getCardinalDirection = (
+  decimalDegrees: number,
+  direction: 'latitude' | 'longitude',
+): CardinalDirection => {
   if (direction === 'latitude') {
     return decimalDegrees < 0 ? 'S' : 'N';
   }
@@ -286,13 +304,17 @@ const getCardinalDirection = (decimalDegrees: number, direction: 'latitude' | 'l
  * @example decimalDegreesToDMS(37.138982, 'latitude') => `37°08'20.3"N`
  * @example decimalDegreesToDMS(-113.411846, 'longitude') => `113°24'42.7"W`
  */
-export const decimalDegreesToDMS = (decimalDegrees: number, direction: 'latitude' | 'longitude'): string => {
+export const decimalDegreesToDMS = (
+  decimalDegrees: number,
+  direction: 'latitude' | 'longitude',
+): string => {
   const cardinalDirection = getCardinalDirection(decimalDegrees, direction);
   const { degrees, minutes, seconds } = calculateDMS(decimalDegrees);
 
-  return `${degrees.toString().padStart(3, '0')}°${minutes.toString().padStart(2, '0')}'${seconds
-    .toString()
-    .padStart(2, '0')}"${cardinalDirection}`;
+  return `${degrees.padStart(3, '0')}°${minutes.padStart(
+    2,
+    '0',
+  )}'${seconds.padStart(2, '0')}"${cardinalDirection}`;
 };
 
 /**
@@ -306,18 +328,40 @@ export const decimalDegreesToDMS = (decimalDegrees: number, direction: 'latitude
  * @example decimalDegreesToOpenAir(37.138982, 'latitude') => '037:08:20.3 N'
  * @example decimalDegreesToOpenAir(-113.411846, 'longitude') => '113:24:42.7 W'
  */
-export const decimalDegreesToOpenAir = (decimalDegrees: number, direction: 'latitude' | 'longitude'): string => {
+export const decimalDegreesToOpenAir = (
+  decimalDegrees: number,
+  direction: 'latitude' | 'longitude',
+): string => {
   const cardinalDirection = getCardinalDirection(decimalDegrees, direction);
   const { degrees, minutes, seconds } = calculateDMS(decimalDegrees);
 
   return [
     [
-      degrees.toString().padStart(3, '0'),
-      minutes.toString().padStart(2, '0'),
-      Number.parseFloat(seconds.toString()).toFixed(2).padStart(5, '0'),
+      degrees.padStart(3, '0'),
+      minutes.padStart(2, '0'),
+      Number.parseFloat(seconds).toFixed(2).padStart(5, '0'),
     ].join(':'),
     cardinalDirection,
   ].join(' ');
+};
+
+/**
+ * Does the inverse of decimalDegreesToOpenAir and converts an OpenAIR formatted DMS string to a decimal degree value.
+ *
+ * @example openAirToDecimalDegrees('037:01:23.80 N') => 37.023278
+ * @example openAirToDecimalDegrees('113:29:07.50 W') => -113.485417
+ */
+export const openAirToDecimalDegrees = (openAir: string): number => {
+  const [degrees, minutes, rest] = openAir.split(':');
+  const [seconds, direction] = rest.split(' ');
+
+  const decimalDegrees =
+    (Number(degrees) +
+      Number(minutes) / 60 +
+      Number.parseFloat(seconds) / 3600) *
+    (direction === 'N' || direction === 'E' ? 1 : -1);
+
+  return Number.parseFloat(decimalDegrees.toFixed(6));
 };
 
 /**
@@ -327,7 +371,8 @@ export const decimalDegreesToOpenAir = (decimalDegrees: number, direction: 'lati
  *
  * @returns The converted nautical miles.
  */
-export const kilometersToNauticalMiles = (kilometers: number): number => kilometers / 1.852;
+export const kilometersToNauticalMiles = (kilometers: number): number =>
+  kilometers / NAUTICAL_MILES_TO_KILOMETERS;
 
 /**
  * Converts nautical miles to kilometers.
@@ -336,7 +381,8 @@ export const kilometersToNauticalMiles = (kilometers: number): number => kilomet
  *
  * @returns The converted kilometers.
  */
-export const nauticalMilesToKilometers = (nauticalMiles: number): number => nauticalMiles * 1.852;
+export const nauticalMilesToKilometers = (nauticalMiles: number): number =>
+  nauticalMiles * NAUTICAL_MILES_TO_KILOMETERS;
 
 /**
  * Adds degrees to a bearing.
@@ -346,7 +392,10 @@ export const nauticalMilesToKilometers = (nauticalMiles: number): number => naut
  *
  * @returns The new bearing.
  */
-export const addDegreesToBearing = (bearing: number, degrees: number): number => {
+export const addDegreesToBearing = (
+  bearing: number,
+  degrees: number,
+): number => {
   return (bearing + degrees + 360) % 360;
 };
 
@@ -358,12 +407,16 @@ export const addDegreesToBearing = (bearing: number, degrees: number): number =>
  *
  * @returns The new bearing.
  */
-export const subtractDegreesFromBearing = (bearing: number, degrees: number): number => {
+export const subtractDegreesFromBearing = (
+  bearing: number,
+  degrees: number,
+): number => {
   return (bearing - degrees + 360) % 360;
 };
 
 export const coordinateToOpenAir = (coordinate: Coordinate): string => {
-  return [decimalDegreesToOpenAir(coordinate[0], 'latitude'), decimalDegreesToOpenAir(coordinate[1], 'longitude')].join(
-    ' ',
-  );
+  return [
+    decimalDegreesToOpenAir(coordinate[0], 'latitude'),
+    decimalDegreesToOpenAir(coordinate[1], 'longitude'),
+  ].join(' ');
 };
