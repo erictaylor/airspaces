@@ -1,5 +1,5 @@
-import { EARTH_RADIUS, NAUTICAL_MILES_TO_KILOMETERS } from './constants';
-import type { CardinalDirection, Coordinate } from './types';
+import { EARTH_RADIUS, NAUTICAL_MILES_TO_KILOMETERS } from '../constants.ts';
+import type { CardinalDirection, Coordinate } from '../types.ts';
 
 /**
  * Converts degrees to radians.

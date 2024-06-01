@@ -1,14 +1,14 @@
 import { describe, expect, it } from 'bun:test';
-import type { CardinalDirection } from '../types';
+import type { CardinalDirection } from '../../types.ts';
 import {
   addDegreesToBearing,
   getCardinalDirection,
   kilometersToNauticalMiles,
   nauticalMilesToKilometers,
   subtractDegreesFromBearing,
-} from '../utils';
+} from '../mapping.ts';
 
-describe('utils', () => {
+describe('mapping', () => {
   describe('addDegreesToBearing', () => {
     it.each([
       [90, 0, 90],

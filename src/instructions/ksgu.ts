@@ -1,5 +1,10 @@
-import { buildAirspace } from '../build-airspace';
-import { SGU_AIRPORT_COORDINATES } from '../constants';
+import { SGU_AIRPORT_COORDINATES } from '../constants.ts';
+import type { Airspace } from '../types.ts';
+import {
+  buildAirspace,
+  buildComment,
+  buildHeader,
+} from '../utils/build-airspace.ts';
 import {
   addDegreesToBearing,
   getBearing,
@@ -9,7 +14,7 @@ import {
   pythagoreanTheorem,
   solveForAngleA,
   subtractDegreesFromBearing,
-} from '../utils';
+} from '../utils/mapping.ts';
 
 type ExtensionArgs = [bearing: number, distance: number, side: number];
 
@@ -19,7 +24,7 @@ export const SW_EXTENSION: ExtensionArgs = [203, 8.5, 2];
 const CEILING = 17999;
 const FLOOR = 'SFC';
 
-export const getInstruction = (radius: number): readonly string[] => {
+export const getInstruction = (radius: number): Airspace => {
   return buildAirspace(
     {
       airspaceClass: 'E',
@@ -38,7 +43,7 @@ export const getExtensionInstructions = (
   bearing: number,
   distance: number,
   side: number,
-): readonly string[] => {
+): Airspace => {
   const pointY = getLatLonPoint(
     SGU_AIRPORT_COORDINATES,
     bearing,
@@ -108,19 +113,18 @@ export const getExtensionInstructions = (
   );
 };
 
-export const main = () => {
-  console.log('* St. George Regional Airport Class E2 Airspace');
-  console.log(getInstruction(RADIUS).join('\n'));
-  console.log('\n');
-  // NE Extension
-  console.log(
+export const main = (): Airspace => {
+  return [
+    buildHeader(`Last Generated: ${new Date().toISOString()}
+See: https://www.federalregister.gov/documents/2017/08/03/2017-16282/establishment-of-class-e-airspace-and-amendment-of-class-e-airspace-st-george-ut`),
+    buildComment('St. George Regional Airport Class E2 Airspace'),
+    getInstruction(RADIUS).join('\n'),
+    '',
     '* St. George Regional Airport Class E4 Airspace - Northeast Segment',
-  );
-  console.log(getExtensionInstructions(...NE_EXTENSION).join('\n'));
-  console.log('\n');
-  // SW Extension
-  console.log(
+    getExtensionInstructions(...NE_EXTENSION).join('\n'),
+    '',
     '* St. George Regional Airport Class E4 Airspace - Southwest Segment',
-  );
-  console.log(getExtensionInstructions(...SW_EXTENSION).join('\n'));
+    getExtensionInstructions(...SW_EXTENSION).join('\n'),
+    '',
+  ];
 };

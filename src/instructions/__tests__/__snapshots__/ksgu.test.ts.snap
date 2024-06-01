@@ -36,3 +36,51 @@ exports[`KSGU Instructions should return the expected southwest extension instru
   "DA 4.5, 176.585560, 229.357024",
 ]
 `;
+
+exports[`KSGU Instructions should return the expected airspace file instructions 1`] = `
+[
+  
+"***************************************************************
+*
+* Last Generated: 2024-05-31T00:00:00.000Z
+* See: https://www.federalregister.gov/documents/2017/08/03/2017-16282/establishment-of-class-e-airspace-and-amendment-of-class-e-airspace-st-george-ut
+*
+***************************************************************
+"
+,
+  "* St. George Regional Airport Class E2 Airspace",
+  
+"AC E
+AN SAINT GEORGE CLASS E2
+AH 17999 ft
+AL SFC
+V X=037:02:11.00 N 113:30:37.00 W
+DC 4.5"
+,
+  "",
+  "* St. George Regional Airport Class E4 Airspace - Northeast Segment",
+  
+"AC E
+AN SAINT GEORGE E4 NE
+AH 17999 ft
+AL SFC
+DP 037:08:20.34 N 113:24:42.65 W
+DP 037:09:20.23 N 113:26:52.79 W
+V X=037:02:11.00 N 113:30:37.00 W
+DA 4.5, 17.071185, 42.995148"
+,
+  "",
+  "* St. George Regional Airport Class E4 Airspace - Southwest Segment",
+  
+"AC E
+AN SAINT GEORGE E4 SW
+AH 17999 ft
+AL SFC
+DP 036:55:09.09 N 113:37:03.68 W
+DP 036:53:35.49 N 113:32:27.89 W
+V X=037:02:11.00 N 113:30:37.00 W
+DA 4.5, 176.585560, 229.357024"
+,
+  "",
+]
+`;

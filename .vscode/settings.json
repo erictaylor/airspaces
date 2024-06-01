@@ -27,6 +27,6 @@
   "editor.formatOnSave": true,
   "eslint.enable": false,
   "prettier.enable": false,
-  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.tsdk": "./node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true
 }

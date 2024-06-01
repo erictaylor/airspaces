@@ -4,8 +4,8 @@ import type {
   Coordinate,
   Instruction,
   InstructionActions,
-} from './types';
-import { decimalDegreesToOpenAir } from './utils';
+} from '../types.ts';
+import { decimalDegreesToOpenAir } from './mapping.ts';
 
 const coordinateToOpenAir = (coordinate: Coordinate): string => {
   return [
@@ -84,6 +84,30 @@ const buildInstruction = (...action: InstructionActions): Instruction => {
       }
     }
   }
+};
+
+/**
+ * Takes a comment string and returns an OpenAIR comment.
+ *
+ * Appends '* ' to the beginning of the comment string,
+ * and adds '* ' to the beginning of each new line.
+ *
+ * @param comment The comment string to format.
+ *
+ * @returns The formatted OpenAIR comment.
+ */
+export const buildComment = (comment: string): string => {
+  return comment
+    .split('\n')
+    .map((line) => `* ${line}`)
+    .join('\n');
+};
+
+export const buildHeader = (header: string): string => {
+  const separator =
+    '***************************************************************';
+
+  return [separator, '*', buildComment(header), '*', separator, ''].join('\n');
 };
 
 export const buildAirspace = (

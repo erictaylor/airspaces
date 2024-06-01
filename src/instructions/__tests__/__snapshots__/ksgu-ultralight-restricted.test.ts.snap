@@ -1,6 +1,53 @@
-***************************************************************
+// Bun Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`KSGU Ultralight Restricted Instructions should return the expected primary instructions 1`] = `
+[
+  "AC R",
+  "AN KSGU ULTRALIGHT VEHICLES RESTRICTED PRIMARY",
+  "AH 17999 ft",
+  "AL SFC",
+  "DP 037:05:27.08 N 113:29:49.20 W",
+  "DP 037:04:50.54 N 113:28:06.32 W",
+  "DP 036:59:35.93 N 113:31:01.88 W",
+  "DP 037:00:12.47 N 113:32:44.64 W",
+]
+`;
+
+exports[`KSGU Ultralight Restricted Instructions should return the expected east extension instructions 1`] = `
+[
+  "AC R",
+  "AN KSGU ULTRALIGHT VEHICLES RESTRICTED EAST EXT",
+  "AH 17999 ft",
+  "AL SFC",
+  "DP 037:03:03.49 N 113:29:06.05 W",
+  "DP 037:01:23.80 N 113:29:07.50 W",
+  "DP 037:00:37.40 N 113:29:59.50 W",
+  "DP 037:00:34.42 N 113:30:29.23 W",
+]
+`;
+
+exports[`KSGU Ultralight Restricted Instructions should return the expected west extension instructions 1`] = `
+[
+  "AC R",
+  "AN KSGU ULTRALIGHT VEHICLES RESTRICTED WEST EXT",
+  "AH 17999 ft",
+  "AL SFC",
+  "DP 037:02:29.27 N 113:31:28.41 W",
+  "DP 037:00:12.47 N 113:32:44.64 W",
+  "V X=037:02:29.27 N 113:31:28.41 W",
+  "DB 037:00:12.47 N 113:32:44.64 W, 037:00:32.89 N 113:33:26.41 W",
+  "V X=037:00:55.44 N 113:33:02.44 W",
+  "DB 037:00:32.89 N 113:33:26.41 W, 037:01:10.89 N 113:33:34.02 W",
+  "DP 037:02:29.27 N 113:31:28.41 W",
+]
+`;
+
+exports[`KSGU Ultralight Restricted Instructions should return the expected airspace file instructions 1`] = `
+[
+  
+"***************************************************************
 *
-* Last Generated: 2024-06-01T04:33:25.885Z
+* Last Generated: 2024-05-31T00:00:00.000Z
 * 
 * Usage of this file is NOT to be considered a "prior authorization"
 * to be in the KSGU airspace under FAR 103.17. This file is to be used
@@ -17,8 +64,10 @@
 *   - https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-103
 *
 ***************************************************************
-
-* KSGU Ultralight Vehicles Do Not Fly Zone Primary
+"
+,
+  
+"* KSGU Ultralight Vehicles Do Not Fly Zone Primary
 * 
 * St. George Regional Airport, UT
 * Lat. 37°02′11″ N., long. 113°30′37″ W.
@@ -30,32 +79,40 @@
 * the airport.
 * 
 * This zone will be known as the "primary" do not fly zone.
-* 
-AC R
+* "
+,
+  
+"AC R
 AN KSGU ULTRALIGHT VEHICLES RESTRICTED PRIMARY
 AH 17999 ft
 AL SFC
 DP 037:05:27.08 N 113:29:49.20 W
 DP 037:04:50.54 N 113:28:06.32 W
 DP 036:59:35.93 N 113:31:01.88 W
-DP 037:00:12.47 N 113:32:44.64 W
-
-* KSGU Ultralight Vehicles Do Not Fly Zone East Ext
+DP 037:00:12.47 N 113:32:44.64 W"
+,
+  "",
+  
+"* KSGU Ultralight Vehicles Do Not Fly Zone East Ext
 * 
 * Airspace extending to the east of the primary zone (described
 * above) to include covering the area west of SR-7 (ie Southern Pkwy)
 * back to the primary zone.
-* 
-AC R
+* "
+,
+  
+"AC R
 AN KSGU ULTRALIGHT VEHICLES RESTRICTED EAST EXT
 AH 17999 ft
 AL SFC
 DP 037:03:03.49 N 113:29:06.05 W
 DP 037:01:23.80 N 113:29:07.50 W
 DP 037:00:37.40 N 113:29:59.50 W
-DP 037:00:34.42 N 113:30:29.23 W
-
-* KSGU Ultralight Vehicles Do Not Fly Zone West Ext
+DP 037:00:34.42 N 113:30:29.23 W"
+,
+  "",
+  
+"* KSGU Ultralight Vehicles Do Not Fly Zone West Ext
 * 
 * Airspace extending to the west of the primary zone (described
 * above) to include covering parts of the "White Dome Nature Preserve"
@@ -63,8 +120,10 @@ DP 037:00:34.42 N 113:30:29.23 W
 * the area occupied by the Family Dollar Distribution Center and
 * UPS Customer Center before cutting back to the west mid point of
 * the primary zone (roughly 037°02′29.26″ N. 113°31′28.41″ W.).
-* 
-AC R
+* "
+,
+  
+"AC R
 AN KSGU ULTRALIGHT VEHICLES RESTRICTED WEST EXT
 AH 17999 ft
 AL SFC
@@ -74,4 +133,8 @@ V X=037:02:29.27 N 113:31:28.41 W
 DB 037:00:12.47 N 113:32:44.64 W, 037:00:32.89 N 113:33:26.41 W
 V X=037:00:55.44 N 113:33:02.44 W
 DB 037:00:32.89 N 113:33:26.41 W, 037:01:10.89 N 113:33:34.02 W
-DP 037:02:29.27 N 113:31:28.41 W
+DP 037:02:29.27 N 113:31:28.41 W"
+,
+  "",
+]
+`;

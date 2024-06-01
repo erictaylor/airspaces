@@ -1,5 +1,10 @@
-import { buildAirspace } from '../build-airspace';
-import { SGU_AIRPORT_COORDINATES } from '../constants';
+import { SGU_AIRPORT_COORDINATES } from '../constants.ts';
+import type { Airspace } from '../types.ts';
+import {
+  buildAirspace,
+  buildComment,
+  buildHeader,
+} from '../utils/build-airspace.ts';
 import {
   addDegreesToBearing,
   getBearing,
@@ -8,7 +13,7 @@ import {
   getMidpoint,
   nauticalMilesToKilometers,
   subtractDegreesFromBearing,
-} from '../utils';
+} from '../utils/mapping.ts';
 
 export const BEARING = 24;
 export const SIDE = 0.75;
@@ -22,7 +27,7 @@ const FLOOR = 'SFC';
 export const getPrimaryInstructions = (
   bearing: number,
   side: number,
-): readonly string[] => {
+): Airspace => {
   const pointN = getLatLonPoint(
     SGU_AIRPORT_COORDINATES,
     bearing,
@@ -74,7 +79,7 @@ export const getPrimaryInstructions = (
 export const getEastExtensionInstructions = (
   bearing: number,
   side: number,
-): readonly string[] => {
+): Airspace => {
   const pointN = getLatLonPoint(
     SGU_AIRPORT_COORDINATES,
     bearing,
@@ -128,7 +133,7 @@ export const getEastExtensionInstructions = (
 export const getWestExtensionInstructions = (
   bearing: number,
   side: number,
-): readonly string[] => {
+): Airspace => {
   const pointS = getLatLonPoint(
     SGU_AIRPORT_COORDINATES,
     addDegreesToBearing(bearing, 180),
@@ -189,44 +194,60 @@ export const getWestExtensionInstructions = (
   );
 };
 
-export const main = () => {
-  /**
-   * KSGU Ultralight Vehicles Do Not Fly Zone Primary
-   *
-   * St. George Regional Airport, UT
-   * Lat. 37°02′11″ N., long. 113°30′37″ W.
-   *
-   * Airspace extending upward from the surface within 0.75 miles each
-   * side of the St. George Regional Airport 024° bearing from the airport
-   * 3.25 miles northeast of the airport, and within 0.75 miles each side
-   * of the airport 204° bearing from the airport 2.5 miles southwest of
-   * the airport.
-   *
-   * This zone will be known as the "primary" do not fly zone.
-   */
-  console.log('* Primary');
-  console.log(getPrimaryInstructions(BEARING, SIDE).join('\n'));
-  console.log('\n');
-  /**
-   * KSGU Ultralight Vehicles Do Not Fly Zone East Ext
-   *
-   * Airspace extending to the east of the primary zone (described
-   * above) to include covering the area west of SR-7 (ie Southern Pkwy)
-   * back to the primary zone.
-   */
-  console.log('* East Ext');
-  console.log(getEastExtensionInstructions(BEARING, SIDE).join('\n'));
-  console.log('\n');
-  /**
-   * KSGU Ultralight Vehicles Do Not Fly Zone West Ext
-   *
-   * Airspace extending to the west of the primary zone (described
-   * above) to include covering parts of the "White Dome Nature Preserve"
-   * area towards but not including River Rd, and north to but not including
-   * the area occupied by the Family Dollar Distribution Center and
-   * UPS Customer Center before cutting back to the west mid point of
-   * the primary zone (roughly 037°02′29.26″ N. 113°31′28.41″ W.).
-   */
-  console.log('* West Ext');
-  console.log(getWestExtensionInstructions(BEARING, SIDE).join('\n'));
+export const main = (): Airspace => {
+  return [
+    buildHeader(`Last Generated: ${new Date().toISOString()}
+
+Usage of this file is NOT to be considered a "prior authorization"
+to be in the KSGU airspace under FAR 103.17. This file is to be used
+by operators with existing "prior authorization" to help communicate
+the spaces to be considered restricted to ultralight vehicle operators
+with existing prior authorization to be in the airspace.
+
+Operators with prior authorization from the KSGU airport manager
+should:
+  - Stay below 500ft AGL in the E2 and E4 airspaces.
+  - Not enter the airspaces around the airport listed in this file.
+
+Resources:
+  - https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-103`),
+
+    buildComment(`KSGU Ultralight Vehicles Do Not Fly Zone Primary
+
+St. George Regional Airport, UT
+Lat. 37°02′11″ N., long. 113°30′37″ W.
+
+Airspace extending upward from the surface within 0.75 miles each
+side of the St. George Regional Airport 024° bearing from the airport
+3.25 miles northeast of the airport, and within 0.75 miles each side
+of the airport 204° bearing from the airport 2.5 miles southwest of
+the airport.
+
+This zone will be known as the "primary" do not fly zone.
+`),
+
+    getPrimaryInstructions(BEARING, SIDE).join('\n'),
+    '',
+
+    buildComment(`KSGU Ultralight Vehicles Do Not Fly Zone East Ext
+
+Airspace extending to the east of the primary zone (described
+above) to include covering the area west of SR-7 (ie Southern Pkwy)
+back to the primary zone.
+`),
+    getEastExtensionInstructions(BEARING, SIDE).join('\n'),
+    '',
+
+    buildComment(`KSGU Ultralight Vehicles Do Not Fly Zone West Ext
+
+Airspace extending to the west of the primary zone (described
+above) to include covering parts of the "White Dome Nature Preserve"
+area towards but not including River Rd, and north to but not including
+the area occupied by the Family Dollar Distribution Center and
+UPS Customer Center before cutting back to the west mid point of
+the primary zone (roughly 037°02′29.26″ N. 113°31′28.41″ W.).
+`),
+    getWestExtensionInstructions(BEARING, SIDE).join('\n'),
+    '',
+  ];
 };

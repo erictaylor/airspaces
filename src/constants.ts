@@ -1,4 +1,4 @@
-import type { Coordinate } from './types';
+import type { Coordinate } from './types.ts';
 
 export const EARTH_RADIUS = 6378.137;
 export const NAUTICAL_MILES_TO_KILOMETERS = 1.852;

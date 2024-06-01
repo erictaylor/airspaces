@@ -1,28 +1,25 @@
 #! /usr/bin/env bun
+import { Command } from 'commander';
+import packageInfo from '../package.json';
+import { generate } from './commands/generate.ts';
+import { list } from './commands/list.ts';
 
-const main = async () => {
-  const instructionFlagIndex = process.argv.findIndex(
-    (arg) => arg === '--instruction' || arg === '-i',
-  );
+process.on('SIGINT', () => process.exit(0));
+process.on('SIGTERM', () => process.exit(0));
 
-  if (instructionFlagIndex === -1) {
-    console.error(
-      'No instruction flag found. Please specify an instruction module to run.',
+const main = async (): Promise<void> => {
+  const program = new Command()
+    .name('airspaces')
+    .description('A CLI tool for managing airspaces')
+    .version(
+      packageInfo.version,
+      '-v, --version',
+      'output the current version of the CLI tool',
     );
-    process.exit(1);
-  }
 
-  const instructionModule = process.argv[instructionFlagIndex + 1];
+  program.addCommand(list).addCommand(generate);
 
-  try {
-    const { main } = await import(`./instructions/${instructionModule}`);
-    main();
-    process.exit(0);
-  } catch (error) {
-    console.error(`Error loading instruction module: ${instructionModule}`);
-    console.error(error);
-    process.exit(1);
-  }
+  program.parse();
 };
 
 main();
