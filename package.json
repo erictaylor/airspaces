@@ -10,7 +10,7 @@
   "type": "module",
   "module": "index.ts",
   "engines": {
-    "bun": "^1.1.10"
+    "bun": "^1.1.15"
   },
   "scripts": {
     "check": "biome check .",
@@ -23,7 +23,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.7.3",
+    "@biomejs/biome": "^1.8.2",
     "@types/bun": "latest"
   },
   "peerDependencies": {
